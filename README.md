@@ -16,7 +16,200 @@ class NeuralBypassSystem:
         self.has_metal_nail = has_metal_nail
         # حد تفعيل الحركة بناءً على قوة شد عضلات الظهر
         self.back_activation_threshold = 0.45 
+        <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منظومة المحاكاة الحيوية وحماية العظام</title>
+    <!-- استدعاء خط فخم وأنيق ومريح للقراءة -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: #151f32;
+            --accent: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #64748b;
+            --success: #4ade80;
+            --danger: #f87171;
+            --border: #1e293b;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .app-wrapper {
+            max-width: 850px;
+            width: 100%;
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid var(--border);
+        }
+        h1 { color: var(--accent); margin: 0 0 5px 0; font-size: 22px; font-weight: 900; text-align: right; }
+        .subtitle { color: var(--text-muted); font-size: 13px; margin: 0 0 20px 0; text-align: right; }
         
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .panel {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            text-align: right;
+        }
+        .control-group { margin-bottom: 15px; }
+        label { font-weight: 700; font-size: 13px; color: #cbd5e1; display: block; margin-bottom: 6px; }
+        input, select {
+            width: 100%; padding: 10px; background: var(--bg-main); border: 1px solid var(--border);
+            border-radius: 8px; color: white; font-size: 14px; box-sizing: border-box; outline: none;
+            font-family: 'Cairo', sans-serif;
+        }
+        .btn-simulate {
+            background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none;
+            padding: 12px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer;
+            width: 100%; font-family: 'Cairo', sans-serif; transition: 0.2s;
+        }
+        .btn-simulate:hover { transform: translateY(-1px); }
+        
+        .gauge-display { text-align: center; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .status-score { font-size: 46px; font-weight: 900; color: var(--success); }
+        .status-title { font-size: 13px; color: var(--text-muted); font-weight: bold; }
+        
+        .dynamic-report {
+            background: rgba(56, 189, 248, 0.02); border-right: 4px solid var(--accent);
+            padding: 15px; border-radius: 8px; margin-top: 15px; font-size: 13px; line-height: 1.6;
+        }
+        
+        /* تصميم جدول الحركات المختصر والمرتب */
+        .table-panel {
+            background: #0f172a; border-radius: 12px; padding: 20px;
+            border: 1px solid var(--border); text-align: right; margin-top: 15px;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { background-color: var(--bg-main); color: var(--accent); padding: 10px; border: 1px solid var(--border); text-align: right; }
+        td { padding: 10px; border: 1px solid var(--border); color: #cbd5e1; }
+        .badge-safe { color: var(--success); font-weight: bold; }
+        .badge-danger { color: var(--danger); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="app-wrapper">
+    <h1>📊 لوحة المحاكاة الميكانيكية والتحليل الرياضي لحالة المريض</h1>
+    <div class="subtitle">منظومة تفاعلية لحساب مصفوفة الإجهاد العظمي وتوجيه زوايا الحركة الآمنة للمسمار [١, ١.٣.١].</div>
+
+    <div class="dashboard-grid">
+        <!-- لوحة التحكم (اليمين) -->
+        <div class="panel">
+            <div class="control-group">
+                <label>زاوية حركة الفخذ للتمرين (درجة):</label>
+                <input type="number" id="inputAngle" value="20" min="0" max="90" onchange="runSimulation()">
+            </div>
+            <div class="control-group">
+                <label>زاوية انحراف المسمار الجراحي (الخطأ الطبي):</label>
+                <select id="inputError" onchange="runSimulation()">
+                    <option value="15">انحراف جراحي بـ 15 درجة</option>
+                    <option value="30">انحراف جراحي حرج بـ 30 درجة</option>
+                </select>
+            </div>
+            <button class="btn-simulate" onclick="runSimulation()">🚀 تشغيل الفحص الرقمي (67%)</button>
+        </div>
+
+        <!-- لوحة المخرجات والشرح (اليسار) -->
+        <div class="panel" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div class="gauge-display">
+                <div class="status-score" id="statusScore">100%</div>
+                <div class="status-title" id="statusTitle">مؤشر استقرار المسمار وعظام الفخذ</div>
+            </div>
+            <div class="dynamic-report" id="reportContainer">
+                <div id="reportText">أدخلي زاوية التمرين المقترحة واضغطي على الزر لتوليد تقرير هندسي فوري ومطابق للحالة [١].</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- جدول الحركات المختصر والمرتب -->
+    <div class="table-panel">
+        <table style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>نوع حركة الفخذ والساق</th>
+                    <th>الزاوية القصوى</th>
+                    <th>الحالة</th>
+                    <th>التوجيه الميكانيكي لحماية المريض</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>المد المستقيم اللطيف</b></td>
+                    <td>حتى 30°</td>
+                    <td><span class="badge-safe">آمن</span></td>
+                    <td>تنشيط الدم حول المسمار ومنع التجلطات [١].</td>
+                </tr>
+                <tr>
+                    <td><b>الثني العميق نحو الصدر</b></td>
+                    <td>أكبر من 35°</td>
+                    <td><span class="badge-danger">خطر</span></td>
+                    <td>يضغط على براغي التثبيت المائلة ومسار العصب [١.١.٥, ١.٣.١].</td>
+                </tr>
+                <tr>
+                    <td><b>حركات اللفت والالتواء (Torsion)</b></td>
+                    <td>0° (ممنوع)</td>
+                    <td><span class="badge-danger">ممنوع</span></td>
+                    <td>عظام الفخذ هشة والالتواء قد يسبب شروخاً عظمية [١, ١.٢.٥].</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+function runSimulation() {
+    let angle = parseFloat(document.getElementById('inputAngle').value) || 0;
+    let errorAngle = parseFloat(document.getElementById('inputError').value);
+    
+    let scoreDisplay = document.getElementById('statusScore');
+    let titleDisplay = document.getElementById('statusTitle');
+    let reportText = document.getElementById('reportText');
+    let reportContainer = document.getElementById('reportContainer');
+    
+    // معادلة حساب الإجهاد ومؤشر الأمان الحرج (67%)
+    let boneDensityPenalty = 14 * 3.5; 
+    let alignmentStress = (angle * 1.1) + (errorAngle * 0.8);
+    let safetyIndex = Math.max(5, Math.min(100, 100 - (boneDensityPenalty + alignmentStress - 20)));
+    
+    scoreDisplay.innerHTML = safetyIndex.toFixed(0) + "%";
+    
+    if (safetyIndex >= 67) {
+        scoreDisplay.style.color = "#4ade80";
+        reportContainer.style.borderColor = "#4ade80";
+        titleDisplay.innerHTML = "🟢 وضع حركي آمن ومستقر لعظام الفخذ";
+        reportText.innerHTML = `حركة الفخذ بزاوية <b>${angle} درجة</b> آمنة جداً وتمنع الضغط على مكان الكسر [١]. المسمار مستقر ولا يضغط على مسار العصب الفخذي [١.١.٥, ١.٣.١]. استمري في التدليك السطحي الناعم لتنشيط الدم [١].`;
+    } else {
+        scoreDisplay.style.color = "#f87171";
+        reportContainer.style.borderColor = "#f87171";
+        titleDisplay.innerHTML = "🔴 تحذير: إجهاد ميكانيكي حرج على منطقة المسمار";
+        reportText.innerHTML = `⚠️ الزاوية الحالية تسبب شدّاً حاداً على الأوتار المتيبسة [١]. وبسبب الخطأ الطبي (ميلان المسمار بـ ${errorAngle}°)، تضغط الحركة على براغي التثبيت ومسار العصب [١.١.٥, ١.٣.١]. قللي زاوية ثني الركبة فوراً حماية لعظامها [١].`;
+    }
+}
+window.onload = runSimulation;
+</script>
+
+</body>
+</html>
+
     def read_back_emg_sensor(self):
         """
         محاكاة قراءة الحساس المثبت على عضلات الظهر السليمة.
