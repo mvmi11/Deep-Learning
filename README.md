@@ -151,3 +151,107 @@ function analyzeXray(event) {
 # Smart Neural Bypass & Robotic Rehabilitation System
 
 An innovative Python prototype designed to bridge signal gaps in cases of severe long-term immobility (e.g., 14 years of paraplegia) combined with orthopedic implants (intramedullary thigh nails).
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاكي زوايا العظام والمسمار الطبي</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; padding: 20px; text-align: center; }
+        .main-box { max-width: 700px; background: white; margin: 20px auto; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        h2 { color: #2563eb; margin-bottom: 5px; }
+        .info-text { color: #64748b; font-size: 14px; margin-bottom: 25px; }
+        .canvas-container { display: flex; justify-content: center; margin: 20px 0; }
+        canvas { background: #0f172a; border-radius: 12px; box-shadow: inset 0 4px 10px rgba(0,0,0,0.3); }
+        .control-panel { background: #f1f5f9; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: right; }
+        button { background: #2563eb; color: white; border: none; padding: 12px 25px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; }
+        button:hover { background: #1d4ed8; }
+        .output-report { display: none; background: #eff6ff; border-right: 5px solid #2563eb; padding: 20px; border-radius: 8px; text-align: right; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="main-box">
+    <h2>🦴 محاكي زوايا العظام والمسمار الطبي (رد الاعتبار الحركي)</h2>
+    <div class="info-text">خوارزمية هندسية لمحاكاة تأثير المسمار الخاطئ على عظمة الفخذ وتوليد زوايا العلاج الآمنة [١.٣.١].</div>
+
+    <div class="control-panel">
+        <label style="font-weight: bold;">اختر زاوية الانحراف الناتجة عن الخطأ الطبي في الفخذ:</label>
+        <select id="angleError" onchange="drawBoneSimulation()">
+            <option value="5">انحراف خفيف (5 درجات)</option>
+            <option value="15" selected>انحراف متوسط/خاطئ (15 درجة)</option>
+            <option value="30">انحراف شديد (30 درجة)</option>
+        </select>
+    </div>
+
+    <div class="canvas-container">
+        <!-- لوحة الرسم البرمجي المتطور -->
+        <canvas id="boneCanvas" width="400" height="250"></canvas>
+    </div>
+
+    <button onclick="generateBoneReport()">🚀 حساب زوايا الحركة الآمنة للفخذ</button>
+
+    <div id="outputReport" class="output-report"></div>
+</div>
+
+<script>
+// دالة للرسم البرمجي التفاعلي لعظمة الفخذ والمسمار داخلها
+function drawBoneSimulation() {
+    let canvas = document.getElementById('boneCanvas');
+    let ctx = canvas.getContext('2d');
+    let angleError = parseFloat(document.getElementById('angleError').value);
+    
+    // مسح اللوحة وإعادة الرسم
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // 1. رسم عظمة الفخذ الافتراضية (باللون الأبيض)
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(170, 30, 60, 190); 
+    ctx.font = "14px Segoe UI";
+    ctx.fillStyle = "#94a3b8";
+    ctx.fillText("عظمة الفخذ", 172, 235);
+
+    // 2. رسم المسمار الطبي الداخلي (باللون الرمادي المعدني) المتأثر بالخطأ الطبي
+    ctx.save();
+    ctx.translate(200, 125); // الانتقال لمركز العظمة
+    ctx.rotate((angleError * Math.PI) / 180); // مصفوفة الدوران الرياضية للخطأ الطبي
+    
+    // رسم المسمار النخاعي الخاطئ
+    ctx.fillStyle = "#e2e8f0";
+    ctx.fillRect(-8, -80, 16, 160);
+    
+    // رسم براغي التثبيت العرضية باللون الأحمر لإظهار مكان الضغط الخاطئ
+    ctx.fillStyle = "#ef4444";
+    ctx.fillRect(-25, -60, 50, 6); // برغي علوي
+    ctx.fillRect(-25, 50, 50, 6);  // برغي سفلي
+    
+    ctx.restore();
+    
+    // رسم دلالات الألوان للأهالي
+    ctx.fillStyle = "#ef4444";
+    ctx.fillText("🔴 نقاط الضغط والشد الخاطئ بسبب الميلان", 20, 25);
+}
+
+function generateBoneReport() {
+    let angle = document.getElementById('angleError').value;
+    let report = document.getElementById('outputReport');
+    report.style.display = "block";
+    
+    // حساب التوجيه الهندسي والرد الميكانيكي لحماية الأعصاب
+    let safeAngle = 90 - angle;
+    
+    report.innerHTML = `
+        <h4 style="margin:0 0 10px 0; color:#1d4ed8;">⚖️ خطة الحركة التصحيحية الآمنة (الرد الميكانيكي):</h4>
+        <li><b>تحليل الإجهاد:</b> ميلان المسمار بـ ${angle} درجات يضغط بشكل مستمر على العصب الفخذي والأوتار الخلفية، مما يسبب خمولاً عصبياً وخوفاً من الحركة [١.١.٥, ١.٣.١].</li>
+        <li><b>زاوية المد الآمنة:</b> لتجنب الاحتكاك بالمسمار، يجب ألا تتجاوز زاوية ثني الركبة والفخذ <span style="color:#16a34a; font-weight:bold;">${safeAngle} درجة</span> أثناء التمارين السلبية [١.٣.١].</li>
+        <li><b>اتجاه التدليك العلاجي:</b> يتم التدليك بشكل طولي من الأسفل للأعلى (عكس اتجاه ميلان المسمار) لتخفيف الضغط المتراكم وتنشيط خلايا الدم العميقة حول العظام [١].</li>
+    `;
+}
+
+// تشغيل الرسم تلقائياً عند فتح الصفحة
+window.onload = drawBoneSimulation;
+</script>
+
+</body>
+</html>
